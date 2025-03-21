@@ -1,0 +1,93 @@
+import java.util.ArrayList;
+import java.util.List;
+
+// Classe que representa um Livro, demonstrando abstração
+class Livro {
+    private String titulo;
+    private String autor;
+    private String isbn;
+
+    public Livro(String titulo, String autor, String isbn) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.isbn = isbn;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+}
+
+// Interface que define o comportamento de itens emprestáveis, demonstrando polimorfismo
+interface Emprestavel {
+    void emprestar();
+    void devolver();
+}
+
+// Classe que herda de Livro e implementa Emprestavel, demonstrando herança e polimorfismo
+class LivroEmprestavel extends Livro implements Emprestavel {
+    private boolean emprestado;
+
+    public LivroEmprestavel(String titulo, String autor, String isbn) {
+        super(titulo, autor, isbn);
+        this.emprestado = false;
+    }
+
+    @Override
+    public void emprestar() {
+        if (!emprestado) {
+            emprestado = true;
+            System.out.println("Livro '" + getTitulo() + "' emprestado.");
+        } else {
+            System.out.println("Livro '" + getTitulo() + "' já está emprestado.");
+        }
+    }
+
+    @Override
+    public void devolver() {
+        if (emprestado) {
+            emprestado = false;
+            System.out.println("Livro '" + getTitulo() + "' devolvido.");
+        } else {
+            System.out.println("Livro '" + getTitulo() + "' não está emprestado.");
+        }
+    }
+}
+
+// Classe que gerencia a biblioteca, demonstrando encapsulamento
+class Biblioteca {
+    private List<Emprestavel> itens;
+
+    public Biblioteca() {
+        this.itens = new ArrayList<>();
+    }
+
+    public void adicionarItem(Emprestavel item) {
+        itens.add(item);
+    }
+
+    public void emprestarItem(Emprestavel item) {
+        item.emprestar();
+    }
+
+    public void devolverItem(Emprestavel item) {
+        item.devolver();
+    }
+
+    public static void main(String[] args) {
+        Biblioteca biblioteca = new Biblioteca();
+        LivroEmprestavel livro1 = new LivroEmprestavel("1984", "George Orwell", "123456789");
+        biblioteca.adicionarItem(livro1);
+
+        biblioteca.emprestarItem(livro1);
+        biblioteca.devolverItem(livro1);
+    }
+}
