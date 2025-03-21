@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+public class Contador {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Digite o número inicial: ");
+            int inicio = scanner.nextInt();
+
+            System.out.print("Digite o número final: ");
+            int fim = scanner.nextInt();
+
+            System.out.print("Digite o incremento: ");
+            int incremento = scanner.nextInt();
+
+            if (incremento <= 0) {
+                throw new IllegalArgumentException("O incremento deve ser maior que zero.");
+            }
+
+            if (inicio > fim) {
+                throw new IllegalArgumentException("O número inicial deve ser menor ou igual ao número final.");
+            }
+
+            System.out.println("Contagem:");
+            for (int i = inicio; i <= fim; i += incremento) {
+                System.out.println(i);
+            }
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erro: Entrada inválida. Por favor, insira números inteiros.");
+        } finally {
+            scanner.close();
+        }
+    }
+}
