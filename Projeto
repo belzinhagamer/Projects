@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class MediaAluno {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Declaração de variáveis
+        double nota1, nota2, nota3, media;
+
+        // Solicita as notas ao usuário
+        System.out.print("Digite a primeira nota: ");
+        nota1 = scanner.nextDouble();
+
+        System.out.print("Digite a segunda nota: ");
+        nota2 = scanner.nextDouble();
+
+        System.out.print("Digite a terceira nota: ");
+        nota3 = scanner.nextDouble();
+
+        // Calcula a média
+        media = calcularMedia(nota1, nota2, nota3);
+
+        // Exibe a média e a situação do aluno
+        System.out.printf("A média do aluno é: %.2f%n", media);
+        verificarSituacao(media);
+
+        // Fecha o scanner
+        scanner.close();
+    }
+
+    // Método para calcular a média
+    public static double calcularMedia(double n1, double n2, double n3) {
+        return (n1 + n2 + n3) / 3; // Retorna a média das três notas
+    }
+
+    // Método para verificar a situação do aluno
+    public static void verificarSituacao(double media) {
+        if (media >= 6.0) {
+            System.out.println("Aluno aprovado!");
+        } else {
+            System.out.println("Aluno reprovado!");
+        }
+    }
+}
