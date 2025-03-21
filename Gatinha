@@ -1,36 +1,38 @@
 import java.util.Scanner;
 
-public class Contador {
+public class SistemaContador {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         try {
-            System.out.print("Digite o número inicial: ");
-            int inicio = scanner.nextInt();
+            System.out.print("Informe o valor inicial: ");
+            int valorInicial = scanner.nextInt();
 
-            System.out.print("Digite o número final: ");
-            int fim = scanner.nextInt();
+            System.out.print("Informe o valor final: ");
+            int valorFinal = scanner.nextInt();
 
-            System.out.print("Digite o incremento: ");
-            int incremento = scanner.nextInt();
+            System.out.print("Informe o passo da contagem: ");
+            int passo = scanner.nextInt();
 
-            if (incremento <= 0) {
-                throw new IllegalArgumentException("O incremento deve ser maior que zero.");
+            if (passo <= 0) {
+                System.out.println("O passo deve ser um número positivo.");
+                return;
             }
 
-            if (inicio > fim) {
-                throw new IllegalArgumentException("O número inicial deve ser menor ou igual ao número final.");
+            if (valorInicial > valorFinal) {
+                System.out.println("O valor inicial deve ser menor ou igual ao valor final.");
+                return;
             }
 
-            System.out.println("Contagem:");
-            for (int i = inicio; i <= fim; i += incremento) {
-                System.out.println(i);
+            System.out.println("Iniciando contagem:");
+            int contador = valorInicial;
+            while (contador <= valorFinal) {
+                System.out.println(contador);
+                contador += passo;
             }
 
-        } catch (IllegalArgumentException e) {
-            System.out.println("Erro: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("Erro: Entrada inválida. Por favor, insira números inteiros.");
+            System.out.println("Erro: Por favor, insira valores numéricos válidos.");
         } finally {
             scanner.close();
         }
