@@ -1,0 +1,27 @@
+const qrcode = require('qrcode');
+const readline = require('readline');
+
+// Configura a interface para leitura de entrada do terminal
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+// Função para gerar o QR Code
+function gerarQRCode(url, nomeArquivo) {
+  qrcode.toFile(nomeArquivo, url, { errorCorrectionLevel: 'H' }, (err) => {
+    if (err) {
+      console.error('Erro ao gerar o QR Code:', err);
+    } else {
+      console.log(`QR Code gerado com sucesso e salvo como ${nomeArquivo}`);
+    }
+    rl.close(); // Fecha a interface de leitura
+  });
+}
+
+// Solicita ao usuário o link do menu do restaurante e o nome do arquivo
+rl.question('Digite o link do menu do restaurante: ', (url) => {
+  rl.question('Digite o nome do arquivo para salvar o QR Code (ex: menu.png): ', (nomeArquivo) => {
+    gerarQRCode(url, nomeArquivo); // Chama a função para gerar o QR Code
+  });
+});
