@@ -1,0 +1,32 @@
+{
+  "name": "projeto",
+  "version": "1.0.0",
+  "description": "Um servidor HTTP básico em Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "ISC"
+}
+
+// Importa o módulo HTTP do Node.js
+const http = require('http');
+
+// Define o hostname e a porta onde o servidor irá escutar
+const hostname = '127.0.0.1';
+const port = 3000;
+
+// Cria o servidor HTTP
+const server = http.createServer((req, res) => {
+  // Define o status da resposta como 200 (OK)
+  res.statusCode = 200;
+  // Define o cabeçalho da resposta como texto simples
+  res.setHeader('Content-Type', 'text/plain');
+  // Envia a resposta "Hello, World!"
+  res.end('Hello, World!\n');
+});
+
+// Faz o servidor escutar na porta e hostname definidos
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
