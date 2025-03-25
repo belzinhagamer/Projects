@@ -1,0 +1,204 @@
+// Aluno.java
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+public class Aluno {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private String email;
+    private LocalDate dataNascimento;
+
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+}
+
+// Treino.java
+import javax.persistence.*;
+
+@Entity
+public class Treino {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private String descricao;
+
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+}
+
+// Professor.java
+import javax.persistence.*;
+
+@Entity
+public class Professor {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private String especialidade;
+
+    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+}
+
+// AlunoRepository.java
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AlunoRepository extends JpaRepository<Aluno, Long> {
+}
+
+// TreinoRepository.java
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TreinoRepository extends JpaRepository<Treino, Long> {
+}
+
+// ProfessorRepository.java
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProfessorRepository extends JpaRepository<Professor, Long> {
+}
+
+// AlunoController.java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/alunos")
+public class AlunoController {
+
+    @Autowired
+    private AlunoRepository alunoRepository;
+
+    @GetMapping
+    public List<Aluno> listar() {
+        return alunoRepository.findAll();
+    }
+
+    @PostMapping
+    public Aluno criar(@RequestBody Aluno aluno) {
+        return alunoRepository.save(aluno);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Aluno> buscarPorId(@PathVariable Long id) {
+        return alunoRepository.findById(id)
+                .map(aluno -> ResponseEntity.ok().body(aluno))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Aluno> atualizar(@PathVariable Long id, @RequestBody Aluno aluno) {
+        return alunoRepository.findById(id)
+                .map(existingAluno -> {
+                    existingAluno.setNome(aluno.getNome());
+                    existingAluno.setEmail(aluno.getEmail());
+                    existingAluno.setDataNascimento(aluno.getDataNascimento());
+                    Aluno updatedAluno = alunoRepository.save(existingAluno);
+                    return ResponseEntity.ok().body(updatedAluno);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        return alunoRepository.findById(id)
+                .map(aluno -> {
+                    alunoRepository.delete(aluno);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+}
+
+// Application.java (Classe principal)
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
