@@ -1,0 +1,69 @@
+mkdir champions-league-api
+cd champions-league-api
+npm init -y
+npm install express mongoose body-parser
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const app = express();
+app.use(bodyParser.json());
+
+mongoose.connect('mongodb://localhost/champions-league', { useNewUrlParser: true, useUnifiedTopology: true });
+
+const Team = mongoose.model('Team', new mongoose.Schema({
+  name: { type: String, required: true },
+  country: { type: String, required: true },
+}));
+
+const Player = mongoose.model('Player', new mongoose.Schema({
+  name: { type: String, required: true },
+  team: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
+  position: { type: String, required: true },
+}));
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
+app.get('/teams', async (req, res) => {
+  try {
+    const teams = await Team.find();
+    res.json(teams);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar equipes' });
+  }
+});
+
+app.post('/teams', async (req, res) => {
+  const team = new Team(req.body);
+  try {
+    await team.save();
+    res.status(201).json(team);
+  } catch (error) {
+    res.status(400).json({ message: 'Erro ao criar equipe' });
+  }
+});
+app.get('/players', async (req, res) => {
+  try {
+    const players = await Player.find().populate('team');
+    res.json(players);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar jogadores' });
+  }
+});
+
+app.post('/players', async (req, res) => {
+  const player = new Player(req.body);
+  try {
+    await player.save();
+    res.status(201).json(player);
+  } catch (error) {
+    res.status(400).json({ message: 'Erro ao criar jogador' });
+  }
+});
+curl -X POST http://localhost:3000/teams -H "Content-Type: application/json" -d '{"name": "Time A", "country": "País X"}'
+curl http://localhost:3000/teams
+curl -X POST http://localhost:3000/players -H "Content-Type: application/json" -d '{"name": "Jogador 1", "team": "ID_da_equipa", "position": "Atacante"}'
+curl http://localhost:3000/players
