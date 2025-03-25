@@ -1,0 +1,129 @@
+import express, { Request, Response } from "express";
+import multer from "multer";
+import cors from "cors";
+import dotenv from "dotenv";
+import RSS from "rss";
+
+// Configurações iniciais
+dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 3000;
+const upload = multer({ dest: "uploads/" });
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
+// Modelos de dados
+interface Podcast {
+  id: string;
+  title: string;
+  description: string;
+  episodes: Episode[];
+}
+
+interface Episode {
+  id: string;
+  title: string;
+  description: string;
+  audioUrl: string;
+  duration: number;
+  publicationDate: Date;
+}
+
+// Dados em memória
+const podcasts: Podcast[] = [];
+
+// Funções de serviço
+const createPodcast = (title: string, description: string): Podcast => {
+  const newPodcast: Podcast = {
+    id: (podcasts.length + 1).toString(),
+    title,
+    description,
+    episodes: [],
+  };
+  podcasts.push(newPodcast);
+  return newPodcast;
+};
+
+const addEpisode = (
+  podcastId: string,
+  title: string,
+  description: string,
+  audioUrl: string,
+  duration: number
+): Episode | null => {
+  const podcast = podcasts.find((p) => p.id === podcastId);
+  if (!podcast) return null;
+
+  const newEpisode: Episode = {
+    id: (podcast.episodes.length + 1).toString(),
+    title,
+    description,
+    audioUrl,
+    duration,
+    publicationDate: new Date(),
+  };
+  podcast.episodes.push(newEpisode);
+  return newEpisode;
+};
+
+const getPodcastFeed = (podcastId: string): string | null => {
+  const podcast = podcasts.find((p) => p.id === podcastId);
+  if (!podcast) return null;
+
+  const feed = new RSS({
+    title: podcast.title,
+    description: podcast.description,
+    feed_url: `http://localhost:${PORT}/podcasts/${podcast.id}/feed`,
+    site_url: "http://localhost:3000",
+  });
+
+  podcast.episodes.forEach((episode) => {
+    feed.item({
+      title: episode.title,
+      description: episode.description,
+      url: episode.audioUrl,
+      date: episode.publicationDate,
+    });
+  });
+
+  return feed.xml();
+};
+
+// Rotas
+app.post("/podcasts", (req: Request, res: Response) => {
+  const { title, description } = req.body;
+  const podcast = createPodcast(title, description);
+  res.status(201).json(podcast);
+});
+
+app.post("/podcasts/:id/episodes", upload.single("audio"), (req: Request, res: Response) => {
+  const podcastId = req.params.id;
+  const { title, description, duration } = req.body;
+  const audioUrl = `http://localhost:${PORT}/uploads/${req.file?.filename}`;
+
+  const episode = addEpisode(podcastId, title, description, audioUrl, parseInt(duration));
+  if (!episode) return res.status(404).json({ error: "Podcast não encontrado" });
+
+  res.status(201).json(episode);
+});
+
+app.get("/podcasts/:id/feed", (req: Request, res: Response) => {
+  const podcastId = req.params.id;
+  const feed = getPodcastFeed(podcastId);
+
+  if (!feed) return res.status(404).json({ error: "Podcast não encontrado" });
+
+  res.set("Content-Type", "application/rss+xml");
+  res.send(feed);
+});
+
+app.get("/podcasts", (req: Request, res: Response) => {
+  res.json(podcasts);
+});
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
