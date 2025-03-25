@@ -1,0 +1,135 @@
+// Singleton Pattern
+public class DatabaseConnection {
+    private static DatabaseConnection instance; // Instância única da classe
+
+    // Construtor privado para evitar instâncias externas
+    private DatabaseConnection() {
+    }
+
+    // Método para obter a instância única da classe
+    public static synchronized DatabaseConnection getInstance() {
+        if (instance == null) { // Se a instância ainda não foi criada
+            instance = new DatabaseConnection(); // Cria a instância
+        }
+        return instance; // Retorna a instância única
+    }
+
+    // Método para simular a conexão ao banco de dados
+    public void connect() {
+        System.out.println("Conectado ao banco de dados.");
+    }
+}
+
+// Factory Method Pattern
+abstract class Pedido {
+    public abstract void processar(); 
+}
+
+// Classe que representa um pedido online
+class PedidoOnline extends Pedido {
+    @Override
+    public void processar() {
+        System.out.println("Processando pedido online.");
+    }
+}
+
+// Classe que representa um pedido na loja
+class PedidoLoja extends Pedido {
+    @Override
+    public void processar() {
+        System.out.println("Processando pedido na loja.");
+    }
+}
+
+// Fábrica abstrata para criar pedidos
+abstract class PedidoFactory {
+    public abstract Pedido criarPedido(); 
+}
+
+// Fábrica para criar pedidos online
+class PedidoOnlineFactory extends PedidoFactory {
+    @Override
+    public Pedido criarPedido() {
+        return new PedidoOnline(); // Retorna um novo pedido online
+    }
+}
+
+// Fábrica para criar pedidos na loja
+class PedidoLojaFactory extends PedidoFactory {
+    @Override
+    public Pedido criarPedido() {
+        return new PedidoLoja(); // Retorna um novo pedido na loja
+    }
+}
+
+// Observer Pattern
+import java.util.ArrayList;
+import java.util.List;
+
+// Interface para os observadores
+interface Observer {
+    void atualizar(String mensagem); // Método para receber atualizações
+}
+
+// Classe que representa um cliente que observa os pedidos
+class Cliente implements Observer {
+    private String nome;
+
+    public Cliente(String nome) {
+        this.nome = nome; // Nome do cliente
+    }
+
+    // Método chamado quando há uma atualização
+    @Override
+    public void atualizar(String mensagem) {
+        System.out.println("Cliente " + nome + ": " + mensagem); // Exibe a mensagem para o cliente
+    }
+}
+
+// Classe que notifica os observadores sobre mudanças
+class PedidoNotifier {
+    private List<Observer> observers = new ArrayList<>(); // Lista de observadores
+
+    // Método para adicionar um observador
+    public void adicionarObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    // Método para remover um observador
+    public void removerObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    // Método para notificar todos os observadores
+    public void notificarObservers(String mensagem) {
+        for (Observer observer : observers) {
+            observer.atualizar(mensagem); 
+        }
+    }
+}
+
+// Main Class
+public class Main {
+    public static void main(String[] args) {
+        // Singleton
+        DatabaseConnection dbConnection = DatabaseConnection.getInstance(); // Obtém a instância única
+        dbConnection.connect(); // Conecta ao banco de dados
+
+        // Factory Method
+        PedidoFactory pedidoFactory = new PedidoOnlineFactory(); // Cria uma fábrica para pedidos online
+        Pedido pedido = pedidoFactory.criarPedido(); 
+        pedido.processar(); // Processa o pedido
+
+        // Observer
+        PedidoNotifier notifier = new PedidoNotifier(); // Cria um notificador de pedidos
+        Cliente cliente1 = new Cliente("Alice"); // Cria um cliente
+        Cliente cliente2 = new Cliente("Bob"); // Cria outro cliente
+
+        // Adiciona os clientes como observadores
+        notifier.adicionarObserver(cliente1);
+        notifier.adicionarObserver(cliente2);
+
+        // Notifica os clientes sobre o status do pedido
+        notifier.notificarObservers("Seu pedido foi enviado!");
+    }
+}
