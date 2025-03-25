@@ -1,0 +1,59 @@
+// index.js
+const fastify = require('fastify')({ logger: true });
+
+// Simulando um banco de dados em memória
+let items = [];
+
+// Rota para criar um item
+fastify.post('/items', async (request, reply) => {
+  const item = { id: items.length + 1, ...request.body };
+  items.push(item);
+  reply.code(201).send(item);
+});
+
+// Rota para listar todos os itens
+fastify.get('/items', async (request, reply) => {
+  return items;
+});
+
+// Rota para obter um item específico
+fastify.get('/items/:id', async (request, reply) => {
+  const item = items.find(i => i.id === parseInt(request.params.id));
+  if (!item) {
+    return reply.code(404).send({ message: 'Item não encontrado' });
+  }
+  return item;
+});
+
+// Rota para atualizar um item
+fastify.put('/items/:id', async (request, reply) => {
+  const index = items.findIndex(i => i.id === parseInt(request.params.id));
+  if (index === -1) {
+    return reply.code(404).send({ message: 'Item não encontrado' });
+  }
+  items[index] = { id: items[index].id, ...request.body };
+  return items[index];
+});
+
+// Rota para deletar um item
+fastify.delete('/items/:id', async (request, reply) => {
+  const index = items.findIndex(i => i.id === parseInt(request.params.id));
+  if (index === -1) {
+    return reply.code(404).send({ message: 'Item não encontrado' });
+  }
+  items.splice(index, 1);
+  return reply.code(204).send();
+});
+
+// Iniciar o servidor
+const start = async () => {
+  try {
+    await fastify.listen(3000);
+    console.log('Servidor rodando em http://localhost:3000');
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
