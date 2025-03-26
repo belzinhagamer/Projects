@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Médica </title>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="#principal">Página Principal</a></li>
+            <li><a href="#sobre">Sobre a Clínica</a></li>
+            <li><a href="#horario">Horário de Atendimento</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </nav>
+
+    <header id="principal">
+        <img src="header-principal.jpg" alt="Imagem da Clínica" style="width:100%;">
+    </header>
+
+    <main>
+        <h1 id="principal">Bem-vindo à Clínica Médica </h1>
+        <p>Na Clínica Médica , oferecemos uma ampla gama de serviços médicos para atender às suas necessidades de saúde. Nossa equipe de profissionais está pronta para cuidar de você e de sua família com dedicação e carinho.</p>
+
+        <h1 id="sobre">Sobre a Clínica</h1>
+        <p>A Clínica Médica  é uma instituição de saúde que oferece serviços de alta qualidade para atender às necessidades de saúde de nossos pacientes. Nossa equipe de profissionais é treinada para fornecer cuidados personalizados e atendimento de emergência.</p>
+
+        <h1 id="horario">Horário de Atendimento</h1>
+        <table>
+            <tr>
+                <th>Serviços</th>
+                <th>Segunda a Sexta</th>
+                <th>Sábados</th>
+                <th>Feriados</th>
+            </tr>
+            <tr>
+                <td>Clínica Geral</td>
+                <td>08h - 19h</td>
+                <td>08h - 14h</td>
+                <td>08h - 14h</td>
+            </tr>
+            <tr>
+                <td>Psicologia</td>
+                <td>08h - 19h</td>
+                <td>08h - 14h</td>
+                <td>08h - 14h</td>
+            </tr>
+            <tr>
+                <td>Pediatria</td>
+                <td>08h - 19h</td>
+                <td>08h - 18h</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Oftalmologia</td>
+                <td>08h - 19h</td>
+                <td>08h - 18h</td>
+                <td>-</td>
+            </tr>
+        </table>
+
+        <h1 id="contato">Contato</h1>
+        <p>Contato: (31) 988-8888 | WhatsApp: (31) 9888-8888</p>
+        <p>Endereço: Rua Exemplo,242 - Cidade, Estado</p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.333333333333!2d-46.635333333333336!3d-23.533333333333335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5a2b2b8f7e6b%3A0x40c6a5770d6d8f5!2sRua+Exemplo%2C+123+-+Cidade%2C+Estado!5e0!3m2!1spt-BR!2sbr!4v1643723400000!5m2!1spt-BR!2sbr" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        <form>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome"><br><br>
+            <label for="email">E-mail:</label>
+            <input type
+
+CSS
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+}
+
+nav {
+    background-color: #20B2AA; /* Cor verde água */
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+}
+
+main {
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #20B2AA; /* Cor verde água */
+    color: #fff;
+}
+
+footer {
+    background-color: #20B2AA; /* Cor verde água */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form input[type="submit"],
+form input[type="reset"] {
+    background-color: #20B2AA; /* Cor verde água */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+form input[type="submit"]:hover,
+form input[type="reset"]:hover {
+    background-color: #1e9a8a; /* Tom mais escuro de verde água */
+}
