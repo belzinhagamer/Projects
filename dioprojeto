@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Clone projeto dio</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f0f0f0; /* Cor de fundo da página */
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            background-color: #ff0000; /* Cor do cabeçalho */
+            padding: 10px;
+            color: white; /* Cor do texto do cabeçalho */
+            border-bottom: 2px solid #ccc;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .search-bar {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            background-color: #ffffff; /* Cor do botão de pesquisa */
+            color: #ff0000; /* Cor do texto do botão */
+            border: 1px solid #ff0000; /* Borda do botão */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #ffcccc; /* Efeito hover no botão */
+        }
+
+        .user-icon {
+            margin-left: 20px;
+            font-size: 24px;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #ffffff; /* Cor de fundo da barra lateral */
+            padding: 20px;
+            border-right: 2px solid #ccc;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar li:hover {
+            background-color: #f1f1f1; /* Efeito hover nos itens do menu */
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            flex: 1;
+            background-color: #f0f0f0; /* Cor de fundo do conteúdo */
+        }
+
+        .video-card {
+            width: 300px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para os cartões */
+        }
+
+        .video-card img {
+            width: 100%;
+        }
+
+        .video-card h3 {
+            font-size: 18px;
+            margin: 10px;
+            color: #333; /* Cor do título do vídeo */
+        }
+
+        .video-card p {
+            margin: 0 10px 10px;
+            color: #555; /* Cor da descrição do vídeo */
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #f4f4f4;
+            border-top: 2px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">YouTube</div>
+        <input type="text" class="search-bar" placeholder="Pesquisar">
+        <button class="search-button">Pesquisar</button>
+        <div class="user-icon">👤</div>
+    </header>
+
+    <nav class="sidebar">
+        <ul>
+            <li>Início</li>
+            <li>Em alta</li>
+            <li>Inscrições</li>
+            <li>Biblioteca</li>
+            <li>Histórico</li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div class="video-card">
+            <img src="https://via.placeholder.com/
