@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex com Animação</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #ff4500;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      margin-top: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      width: 250px;
+      transition: border-color 0.3s ease;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    input:focus {
+      border-color: #ff4500;
+    }
+
+    button {
+      padding: 10px 25px;
+      margin-top: 10px;
+      background-color: #ff4500;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    button:hover {
+      background-color: #e03e00;
+    }
+
+    #pokemonInfo {
+      margin-top: 20px;
+      color: #333;
+    }
+
+    #pokemonInfo img {
+      width: 150px;
+      height: 150px;
+      margin-top: 10px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+    }
+
+    .stat {
+      background-color: #f8f8f8;
+      padding: 5px;
+      border-radius: 5px;
+      width: 80px;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 5px #ff4500;
+      }
+      to {
+        box-shadow: 0 0 20px #ff4500, 0 0 30px #ff4500;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pokédex com Animação</h1>
+    <input type="text" id="pokemonInput" placeholder="Digite o nome ou número do Pokémon">
+    <button id="searchButton">Buscar</button>
+    <div id="pokemonInfo"></div>
+  </div>
+  <script>
+    const pokemonInput = document.getElementById('pokemonInput');
+    const searchButton = document.getElementById('searchButton');
+    const pokemonInfo = document.getElementById('pokemonInfo');
+
+    searchButton.addEventListener('click', () => {
+      const pokemonNameOrId = pokemonInput.value.toLowerCase();
+      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNameOrId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Pokémon não encontrado!');
+          }
+          return response.json();
+        })
+        .then(data => {
+          const name = data.name;
+          const id = data.id;
+          const types = data.types.map(type => type.type.name).join(', ');
+          const image = data.sprites.front_default;
+          const abilities = data.abilities.map(ability => ability.ability.name).join(', ');
+          const stats = data.stats.map(stat => `<div class="stat"><strong>${stat.stat.name}:</strong> ${stat.base_stat}</div>`).join('');
+
+          pokemonInfo.innerHTML = `
+            <h2>${name.toUpperCase()} #${id}</h2>
+            <img src="${image}" alt="${name
