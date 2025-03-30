@@ -1,0 +1,29 @@
+<header>
+        <h1>Bem-vindo ao Site de Carros</h1>
+    </header>
+    <main>
+        <div class="car-list">
+            <div class="car">
+                <h2>Carro 1</h2>
+                <button onclick="showDetails('Carro 1', 'Descrição detalhada do Carro 1.')">Ver Detalhes</button>
+            </div>
+            <div class="car">
+                <h2>Carro 2</h2>
+                <button onclick="showDetails('Carro 2', 'Descrição detalhada do Carro 2.')">Ver Detalhes</button>
+            </div>
+            <div class="car">
+                <h2>Carro 3</h2>
+                <button onclick="showDetails('Carro 3', 'Descrição detalhada do Carro 3.')">Ver Detalhes
+                </button>
+                <p>
+document.getElementById('view-skills').addEventListener('click', function() {
+    document.getElementById('main-screen').classList.add('hidden');
+    document.getElementById('skill-screen').classList.remove('hidden');
+});
+
+document.getElementById('back-to-main').addEventListener('click', function() {
+    document.getElementById('skill-screen').classList.add('hidden');
+    document.getElementById('main-screen').classList.remove('hidden');
+});
+
+//É só organizar direitinho no vs code que da certo mas sem imagens.
