@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio </title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+
+        header, main, footer {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+
+        header {
+            background-color: #4682b4;
+            color: white;
+            padding: 40px 20px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        h2 {
+            color: #4682b4;
+            margin-top: 40px;
+        }
+
+        #projects, #skills {
+            margin-top: 20px;
+        }
+
+        #project-list div, #skill-list li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        #project-list div:hover, #skill-list li:hover {
+            transform: scale(1.05);
+        }
+
+        a {
+            color: #4682b4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #4682b4;
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="name">Seu Nome</h1>
+        <p id="bio">Desenvolvedora web apaixonado por criar experiências incríveis.</p>
+    </header>
+    <main>
+        <section id="projects">
+            <h2>Projetos</h2>
+            <div id="project-list"></div>
+        </section>
+        <section id="skills">
+            <h2>Habilidades</h2>
+            <ul id="skill-list"></ul>
+        </section>
+    </main>
+    <footer>
+        <p>Contato: <span id="email">seuemail@example.com</span></p>
+        <p><a id="linkedin" href="https://linkedin.com/in/seuperfil" target="_blank">LinkedIn</a></p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const data = {
+                "name": "Seu Nome",
+                "bio": "Desenvolvedor web apaixonado por criar experiências incríveis.",
+                "projects": [
+                    {
+                        "title": "Projeto 1",
+                        "description": "Descrição do projeto 1.",
+                        "link": "https://linkdoproj1.com",
+                        "technologies": ["HTML", "CSS", "JavaScript"]
+                    },
+                    {
+                        "title": "Projeto 2",
+                        "description": "Descrição do projeto 2.",
+                        "link": "https://linkdoproj2.com",
+                        "technologies": ["React", "Node.js"]
+                    }
+                ],
+                "skills": ["HTML", "CSS", "JavaScript", "React"],
+                "contact": {
+                    "email": "não vou colocar",
+                }
+            };
+
+            document.getElementById('name').textContent = data.name;
+            document.getElementById('bio').textContent = data.bio;
+            document.getElementById('email').textContent = data.contact.email;
+            document.getElementById('linkedin').href = data.contact.linkedin;
+
+            const projectList = document.getElementById('project-list');
+            data.projects.forEach(project => {
+                const projectDiv = document.createElement('div');
+                projectDiv.innerHTML = `
+                    <h3>${project.title}</h3>
+                    <p>${project.description}</p>
+                    <a href="${project.link}" target="_blank">Ver Projeto</a>
+                    <p
