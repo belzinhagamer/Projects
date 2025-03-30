@@ -5,10 +5,8 @@
 // - /utils: Funções utilitárias
 // - /assets: Imagens e recursos estáticos
 
-// Instale axios para facilitar as requisições HTTP
-// npm install axios
-
 // Exemplo de Componente com Consumo de API
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import axios from 'axios';
@@ -59,10 +57,3 @@ const styles = StyleSheet.create({
 });
 
 export default DataComponent;
-
-// Boas Práticas
-// - Separação de Preocupações: Mantenha lógica de negócios separada da apresentação.
-// - Reutilização: Crie componentes reutilizáveis com props.
-// - Tratamento de Erros: Sempre trate erros de rede e forneça feedback ao usuário.
-// - Modularidade: Mantenha o código modular e documentado.
-// - Indicadores de Carregamento: Use para melhorar a experiência do usuário.
