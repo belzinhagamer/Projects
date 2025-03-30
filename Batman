@@ -1,0 +1,54 @@
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+
+const BatmanPasswordSequencer = () => {
+  const [password, setPassword] = useState('');
+
+  const generatePassword = () => {
+    const batmanElements = ['BAT', 'GOTHAM', 'JOKER', 'ROBIN', 'NIGHT'];
+    const randomElement = batmanElements[Math.floor(Math.random() * batmanElements.length)];
+    const randomNumber = Math.floor(Math.random() * 1000);
+    const newPassword = `${randomElement}-${randomNumber}`;
+    setPassword(newPassword);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Batman Password Sequencer</Text>
+      <Text style={styles.password}>{password}</Text>
+      <TouchableOpacity style={styles.button} onPress={generatePassword}>
+        <Text style={styles.buttonText}>Generate Password</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
+  title: {
+    fontSize: 24,
+    color: '#FFD700',
+    marginBottom: 20,
+  },
+  password: {
+    fontSize: 20,
+    color: '#FFF',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#FFD700',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#000',
+    fontSize: 16,
+  },
+});
+
+export default BatmanPasswordSequencer;
