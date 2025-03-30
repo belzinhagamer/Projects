@@ -1,0 +1,68 @@
+// Estrutura do Projeto
+// - /components: Componentes reutilizáveis
+// - /screens: Telas do aplicativo
+// - /services: Serviços, como chamadas de API
+// - /utils: Funções utilitárias
+// - /assets: Imagens e recursos estáticos
+
+// Instale axios para facilitar as requisições HTTP
+// npm install axios
+
+// Exemplo de Componente com Consumo de API
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import axios from 'axios';
+
+const DataComponent = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://api.example.com/data');
+        setData(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Text>Carregando...</Text>;
+  }
+
+  return (
+    <View style={styles.container}>
+      {data.map(item => (
+        <Text key={item.id} style={styles.item}>{item.name}</Text>
+      ))}
+    </View>
+  );
+};
+
+// Estilos Reutilizáveis
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  item: {
+    fontSize: 18,
+    marginVertical: 5,
+  },
+});
+
+export default DataComponent;
+
+// Boas Práticas
+// - Separação de Preocupações: Mantenha lógica de negócios separada da apresentação.
+// - Reutilização: Crie componentes reutilizáveis com props.
+// - Tratamento de Erros: Sempre trate erros de rede e forneça feedback ao usuário.
+// - Modularidade: Mantenha o código modular e documentado.
+// - Indicadores de Carregamento: Use para melhorar a experiência do usuário.
