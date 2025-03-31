@@ -1,0 +1,29 @@
+import React from 'react';
+import { Box, Button, Heading, VStack, Text } from '@chakra-ui/react';
+
+function App() {
+  const handleClick = (message) => {
+    alert(message);
+  };
+
+  return (
+    <Box textAlign="center" py={10} px={6}>
+      <VStack spacing={4}>
+        <Heading as="h1" size="2xl" mb={6}>
+          Bem-vindo à Minha Aplicação
+        </Heading>
+        <Text fontSize="lg" mb={4}>
+          Esta é a página inicial da sua aplicação.
+        </Text>
+        <Button colorScheme="teal" onClick={() => handleClick('Você clicou no botão 1!')}>
+          Botão 1
+        </Button>
+        <Button colorScheme="blue" onClick={() => handleClick('Você clicou no botão 2!')}>
+          Botão 2
+        </Button>
+      </VStack>
+    </Box>
+  );
+}
+
+export default App;
