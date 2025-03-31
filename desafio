@@ -1,0 +1,34 @@
+import { BrowserRouter, Routes, Route, useParams, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+// Componentes
+const Home = () => <div>Bem-vindo à Home!</div>;
+const ProductDetail = () => {
+  const { id } = useParams();
+  return <div>Detalhes do Produto {id}</div>;
+};
+const Login = () => {
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    localStorage.setItem("token", "fake-token");
+    navigate("/dashboard");
+  };
+  return <button onClick={handleLogin}>Login</button>;
+};
+
+// Aplicação
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
