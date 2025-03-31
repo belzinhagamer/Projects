@@ -1,0 +1,57 @@
+mkdir banco-app && cd banco-app && \
+npm init -y && \
+npm install express && \
+echo "const express = require('express');
+const app = express();
+app.use(express.json());
+
+let contas = [];
+
+// Criar uma nova conta
+app.post('/contas', (req, res) => {
+    const { nome, saldoInicial } = req.body;
+    const novaConta = {
+        id: contas.length + 1,
+        nome,
+        saldo: saldoInicial || 0
+    };
+    contas.push(novaConta);
+    res.status(201).json(novaConta);
+});
+
+// Consultar saldo
+app.get('/contas/:id', (req, res) => {
+    const { id } = req.params;
+    const conta = contas.find(c => c.id === parseInt(id));
+    if (!conta) return res.status(404).json({ error: 'Conta não encontrada' });
+    res.json({ saldo: conta.saldo });
+});
+
+// Depositar
+app.post('/contas/:id/depositar', (req, res) => {
+    const { id } = req.params;
+    const { valor } = req.body;
+    const conta = contas.find(c => c.id === parseInt(id));
+    if (!conta) return res.status(404).json({ error: 'Conta não encontrada' });
+    conta.saldo += valor;
+    res.json(conta);
+});
+
+// Sacar
+app.post('/contas/:id/sacar', (req, res) => {
+    const { id } = req.params;
+    const { valor } = req.body;
+    const conta = contas.find(c => c.id === parseInt(id));
+    if (!conta) return res.status(404).json({ error: 'Conta não encontrada' });
+    if (conta.saldo < valor) return res.status(400).json({ error: 'Saldo insuficiente' });
+    conta.saldo -= valor;
+    res.json(conta);
+});
+
+// Iniciar o servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(\`Servidor rodando na porta \${PORT}\`);
+});
+" > index.js && \
+node index.js
