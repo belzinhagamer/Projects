@@ -1,0 +1,7 @@
+//como criar
+
+from azure.storage.filedatalake import DataLakeServiceClient
+
+connection_string = "sua_string_de_conexao"
+service_client = DataLakeServiceClient.from_connection_string(connection_string)
+file_system_client = service_client.get_file_s
