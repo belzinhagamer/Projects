@@ -1,0 +1,73 @@
+class Post {
+    constructor(
+        public title: string,
+        public content: string,
+        public author: string,
+        public createdAt: Date
+    ) {}
+}
+
+class App {
+    private posts: Post[];
+
+    constructor() {
+        // Inicializando alguns posts como exemplo com cores diferentes
+        this.posts = [
+            new Post("Título do Post 1", "Este é o conteúdo do Post 1", "Autor 1", new Date()),
+            new Post("Título do Post 2", "Este é o conteúdo do Post 2", "Autor 2", new Date()),
+            new Post("Título do Post 3", "Este é o conteúdo do Post 3", "Autor 3", new Date()),
+        ];
+        this.render();
+    }
+
+    // Método para renderizar os posts no DOM
+    private render() {
+        const appElement = document.getElementById("app");
+        if (appElement) {
+            appElement.innerHTML = this.posts.map((post, index) => this.postTemplate(post, index)).join('');
+        }
+    }
+
+    // Método para definir o template para cada post e adicionar cores
+    private postTemplate(post: Post, index: number): string {
+        const colors = ["#e0f7fa", "#ffe0b2", "#e1bee7"]; // Cores de fundo diferentes para cada post
+        const backgroundColor = colors[index % colors.length];
+
+        return `
+            <div class="post" style="background-color: ${backgroundColor};">
+                <h2 style="color: #00796b;">${post.title}</h2>
+                <p style="color: #444;">${post.content}</p>
+                <p><small style="color: #555;">Escrito por ${post.author} em ${post.createdAt.toLocaleString()}</small></p>
+            </div>
+        `;
+    }
+}
+
+// Inicializa a aplicação
+document.addEventListener("DOMContentLoaded", () => {
+    new App();
+});
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .post {
+            border: 1px solid #ccc;
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="module" src="main.ts"></script>
+</body>
+</html>
